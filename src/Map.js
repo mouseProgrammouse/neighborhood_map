@@ -9,8 +9,6 @@ class Map extends Component {
   //update address info
   //add markers on map
   componentWillReceiveProps = ({ isScriptLoaded, isScriptLoadSucceed }) => {
-    //const { isScriptLoaded, isScriptLoadSucceed } = this.props
-    console.log('componentWillReceiveProps: isScriptLoaded')
     const {
       setMap,
       setGeocoder,
@@ -23,7 +21,6 @@ class Map extends Component {
 
     if (isScriptLoaded && !this.props.isScriptLoaded) {
       //map loaded with succes
-      console.log('Loading')
       if (isScriptLoadSucceed) {
         //create map
         const map = new google.maps.Map(this.refs.map, {
@@ -47,14 +44,13 @@ class Map extends Component {
           this.addMarkersOnMap(map, locations, markerIcon)
         }).catch(err => {window.alert(err)})
       }
-      else alert('Oh...Something bad happens😱 Map isn\'t loaded')
+      else window.alert('Oh...Something bad happens😱 Map isn\'t loaded')
     }
   }
 
 
   componentWillUpdate = () => {
-    console.log('componentWillUpdate:geocoder')
-    const { setLocations, locations, map, geocoder, markerIcon } = this.props;
+    const { locations, map, markerIcon } = this.props;
     if (map) {
       this.addMarkersOnMap(map, locations, markerIcon)
     }
@@ -94,7 +90,7 @@ class Map extends Component {
         url: markerIcon, // url
         scaledSize: new google.maps.Size(60, 60), // scaled size
         origin: new google.maps.Point(0,0), // origin
-        anchor: new google.maps.Point(0, 0) // anchor
+        anchor: new google.maps.Point(30, 60) // anchor
       }
       // Create a marker per location, and put into markers array.
       const marker = new google.maps.Marker({
@@ -111,7 +107,7 @@ class Map extends Component {
       // Create an onclick event to open the large infowindow at each marker.
       marker.addListener('click', function() {
         //create content
-        const contentString = '<div><h2>'+this.title+'</h2><p>'+this.address+'</p></div>'
+        const contentString = '<div class="info-window"><h2>'+this.title+'</h2><p>'+this.address+'</p></div>'
         const infoWindow = new google.maps.InfoWindow({
           content: contentString
         })

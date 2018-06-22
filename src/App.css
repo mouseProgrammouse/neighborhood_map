@@ -30,6 +30,32 @@
   width: 29%;
 }
 
+.info-window {
+  max-width: 200px;
+}
+
+.location-list {
+  list-style-type: none;
+  padding: 0 10px 0 15px;
+}
+
+.location-list li:hover {
+  background-color: #67676733;
+}
+
+.location-list li {
+  padding: 15px 0;
+  border-bottom: 1px solid #676767a6;
+}
+
+.location-list p {
+  margin: 0.3em 0.2em 0.3em 0.2em;
+}
+
+.location-list h2 {
+  margin: 0.3em 0.2em 0.3em 0.2em;
+}
+
 /* Always set the map height explicitly to define the size of the div
   * element that contains the map. */
 

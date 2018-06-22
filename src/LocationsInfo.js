@@ -29,8 +29,8 @@ const locations = [{
     }, {
       title: 'Grove Road',
       location: {
-        lat : 53.3296435,
-        lng : -6.2701778
+        lat : 53.329884,
+        lng : -6.264442
       }
     }];
 

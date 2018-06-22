@@ -7,7 +7,7 @@ import './App.css'
 class App extends Component {
   state = {
     //lat and lng of center my home district at Dublin city
-    initialLocation: {lat: 53.325182, lng: -6.270153},
+    initialLocation: {lat: 53.324176, lng: -6.265439},
     zoom: 14,
     map: null,
     geocoder: null,

@@ -7,8 +7,11 @@ render () {
 
   return (
     <div className="location-container">
-      <ul>
-        { locations.map((location) => (<li key={location.title}>{location.title}</li>))}
+      <ul className="location-list">
+        { locations.map((location) => (<li key={location.title}>
+          <h2>{location.title}</h2>
+          <p className="location-address">{location.address}</p>
+          </li>))}
       </ul>
     </div>
   )
