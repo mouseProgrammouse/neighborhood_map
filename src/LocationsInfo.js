@@ -15,7 +15,7 @@ const locations = [{
         lng : -6.266136
       }
     },{
-      title: 'Nik\'s coffee',
+      title: 'Nick\'s coffee',
       location: {
         lat : 53.3260303,
         lng : -6.255507499999999
