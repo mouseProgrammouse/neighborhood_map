@@ -5,14 +5,12 @@ import React, { Component } from 'react'
 import scriptLoader from 'react-async-script-loader'
 
 class Map extends Component {
-  //initial map and geocoder
+  //initial map
   //update address info
   //add markers on map
   componentWillReceiveProps = ({ isScriptLoaded, isScriptLoadSucceed }) => {
     const {
       setMap,
-      setGeocoder,
-      setLocations,
       initialLocation,
       zoom,
       locations,
@@ -27,27 +25,13 @@ class Map extends Component {
           center: initialLocation,
           zoom: zoom
         })
-        //create geocoder(to get adresses for locations)
-        const geocoder = new google.maps.Geocoder()
-        //set map and geocoder
+        //set map
         setMap(map)
-        setGeocoder(geocoder)
-        //update address information about places
-        let promises = []
-        for (const place of locations) {
-          promises.push(this.updatePlaceInfo(geocoder, place))
-        }
-        Promise.all(promises).then(results => {
-          //update array with adresses in main component
-          setLocations(results)
-          //add markers on map
-          this.addMarkersOnMap(map, locations, markerIcon)
-        }).catch(err => {window.alert(err)})
+        this.addMarkersOnMap(map, locations, markerIcon)
       }
       else window.alert('Oh...Something bad happens😱 Map isn\'t loaded')
     }
   }
-
 
   componentWillUpdate = () => {
     const { locations, map, markerIcon } = this.props;
@@ -55,29 +39,6 @@ class Map extends Component {
       this.addMarkersOnMap(map, locations, markerIcon)
     }
   }
-
-  //get Info about place by using lat&lng
-  //return promise
-  updatePlaceInfo = (geocoder, place) => {
-    let newPlace = place
-    newPlace.address = ''//address by default
-    return new Promise (function(resolve, reject){
-      geocoder.geocode({'location': newPlace.location}, function(result, status) {
-        if (status === 'OK') {
-          //resolve(result)
-          if(result) {
-            newPlace.address = result[0].formatted_address
-            resolve(newPlace)
-          } else {
-            resolve(newPlace)
-          }
-        } else {
-          reject(new Error('Can\'t get addresses. Geocoder failed due to: ' + status))
-        }
-      })
-    })
-  }
-
 
   addMarkersOnMap = (map, locations, markerIcon) => {
     for (let i = 0; i < locations.length; i++) {
@@ -103,7 +64,6 @@ class Map extends Component {
         id: i
       })
 
-      //this.updatePlaceInfo(geocoder, map, position)
       // Create an onclick event to open the large infowindow at each marker.
       marker.addListener('click', function() {
         //create content
