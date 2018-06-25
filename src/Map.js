@@ -82,8 +82,8 @@ class Map extends Component {
           `<div class='info-window'>
             <h2>${this.title}</h2>
             <img src='${this.img}' alt='cafe: ${this.title}'/>
-            <p>${this.address}</p>
-            <span class='phone'>${this.phone}</span>
+            <p><i class='material-icons'>location_on</i> ${this.address}</p>
+            <span class='phone'><i class='material-icons'>call</i> ${this.phone}</span>
           </div>`
         const infoWindow = new google.maps.InfoWindow({
           content: contentString

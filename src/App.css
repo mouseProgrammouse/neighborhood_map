@@ -17,19 +17,18 @@
 
 .map-container {
   position: relative;
-  height: 100%;
   width: 70%;
 }
 
 .map-loader {
   position: absolute;
-  top: 25%;
   right: 50%;
+  top: 25%;
 }
 
 .location-container {
-  width: 28%;
   padding: 0 1%;
+  width: 28%;
 }
 
 .info-window {
@@ -47,8 +46,8 @@
 
 .rating-filter {
   border: 1px solid #ccc;
-  box-sizing: border-box;
   border-radius: 3px;
+  box-sizing: border-box;
   overflow: hidden;
   position: relative;
 }
@@ -64,28 +63,24 @@ select:focus {
 }
 
 .rating-filter select {
-  height: 34px;
-  padding: 5px 0 5px 5px;
   background: transparent;
   border: none;
+  height: 34px;
+  padding: 5px 0 5px 5px;
   /*hide default down arrow in webkit */
   -webkit-appearance: none;
 }
 
 .location-list {
-  list-style-type: none;
-  padding: 0 5px 0 0;
   height: 550px;
+  list-style-type: none;
   overflow-y: auto;
-}
-
-.location-list li:hover {
-  background-color: #67676733;
+  padding: 0 5px 0 0;
 }
 
 .location-list li {
-  padding: 15px 0;
   border-bottom: 1px solid #676767a6;
+  padding: 15px 0;
 }
 
 .location-list p {
@@ -94,6 +89,10 @@ select:focus {
 
 .location-list h2 {
   margin: 0.3em 0.2em 0.3em 0.2em;
+}
+
+.location-list img {
+  display: none;
 }
 
 /* Always set the map height explicitly to define the size of the div
@@ -109,4 +108,84 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+/*------------------STYLE FOR TABLETS------------------------------------*/
+
+@media screen and (max-width:820px) {
+  .map-container {
+    position: relative;
+    width: 100%;
+  }
+
+  #map {
+    height: 100%;
+    min-height: 300px;
+  }
+
+  .info-window img {
+    display: none
+  }
+
+  .location-container {
+    overflow-y: none;
+    width: 100%;
+  }
+
+  .rating-filter {
+    margin: 10px 0 0 0;
+  }
+
+  .location-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .location-list li {
+    width: 45%;
+  }
+
+  .location-list p {
+    font-size: 1.1em;
+  }
+
+  .location-list img {
+    display: block;
+    height: 170px;
+    width: 100%;
+  }
+}
+
+/*------------------STYLE FOR MOBILE------------------------------------*/
+
+@media screen and (max-width:430px) {
+  body {
+    min-width: 350px;
+  }
+
+  .location-list li {
+    min-height: 120px;
+    position: relative;
+    text-align: right;
+    width: 100%;
+  }
+
+  .location-list h2,
+  .location-list p {
+    padding-left: 130px;
+  }
+
+  .location-list p {
+    padding-bottom: 5px;
+  }
+
+  .location-list img {
+    border-radius: 80px;
+    display: block;
+    height: 120px;
+    position: absolute;
+    top: 10px;
+    width: 120px;
+  }
 }
