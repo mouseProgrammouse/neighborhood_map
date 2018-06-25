@@ -11,6 +11,9 @@ class App extends Component {
     zoom: 14,
     map: null,
     locations: [],
+    markers: [],
+    ratings: [1,2,3,4,5],
+    currentFilterRaiting: 'all',
     defaultImg: require('./static/coffee.png'), //default img for info window
     markerIcon: require('./static/coffee-icon.svg')
   }
@@ -40,7 +43,6 @@ class App extends Component {
           this.setLocations(data)
         })
       })
-      //this.setLocations(places)
     }).catch((err)=>{console.error(' Can\'t get location\'s info from YELP: '+err)})
   }
 
@@ -98,12 +100,45 @@ class App extends Component {
     )
   }
 
+  //filter locations by rating
+  //if value === all -> reset
+  filterLocationsByRating = (e, locations) => {
+    const value = e.target.value
+    let newLocations = locations
+    //hide/show locations from map and list
+    if (value === 'all') {
+      this.showAll(locations)
+      //reset filters
+    } else {
+      for (const place of newLocations){
+        place.show = (place.rating >= value)
+      }
+      this.setLocations(newLocations)
+    }
+    //set current value to filter
+    this.setFilterRaiting(value)
+  }
+
+  //reset filter
+  showAll = (locations) => {
+    let newLocations = locations
+    //hide/show locations from map and list
+    for (const place of newLocations){
+      place.show = true
+    }
+    this.setLocations(newLocations)
+  }
+
   setMap = (newMap) => {
     this.setState  ({ map: newMap })
   }
 
   setLocations = (newLocations) => {
     this.setState({locations: newLocations})
+  }
+
+  setFilterRaiting = (newValue) => {
+    this.setState({currentFilterRaiting: newValue})
   }
 
   render() {
@@ -114,11 +149,17 @@ class App extends Component {
         </div>
         <Locations
           locations={this.state.locations}
+          showAll={this.showAll}
+          showOpenNow={this.showOpenNow}
+          currentFilterRaiting={this.state.currentFilterRaiting}
+          filterLocationsByRating={this.filterLocationsByRating}
+          ratings = {this.state.ratings}
         />
         <Map
           setMap={this.setMap}
           initialLocation={this.state.initialLocation}
           markerIcon={this.state.markerIcon}
+          markers={this.state.markers}
           locations={this.state.locations}
           zoom={this.state.zoom}
           map={this.state.map}

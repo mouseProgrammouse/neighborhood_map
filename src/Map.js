@@ -12,9 +12,7 @@ class Map extends Component {
     const {
       setMap,
       initialLocation,
-      zoom,
-      locations,
-      markerIcon
+      zoom
     } = this.props;
 
     if (isScriptLoaded && !this.props.isScriptLoaded) {
@@ -27,7 +25,6 @@ class Map extends Component {
         })
         //set map
         setMap(map)
-        this.addMarkersOnMap(map, locations, markerIcon)
       }
       else window.alert('Oh...Something bad happens😱 Map isn\'t loaded')
     }
@@ -41,50 +38,52 @@ class Map extends Component {
   }
 
   addMarkersOnMap = (map, locations, markerIcon) => {
-    for (let i = 0; i < locations.length; i++) {
-      // Get the position of current marker
-      const position = locations[i].location
-      const title = locations[i].title
-      const address = locations[i].address
-      const img_src = locations[i].img
-      const phone = locations[i].phone
-      //customize icon
-      var customIcon = {
-        url: markerIcon, // url
-        scaledSize: new google.maps.Size(60, 60), // scaled size
-        origin: new google.maps.Point(0,0), // origin
-        anchor: new google.maps.Point(30, 60) // anchor
-      }
-      // Create a marker per location, and put into markers array.
-      const marker = new google.maps.Marker({
-        position: position,
-        title: title,
-        address: address,
-        phone: phone,
-        img: img_src,
-        animation: google.maps.Animation.DROP,
-        map: map,
-        icon: customIcon,
-        id: i
-      })
-
-      // Create an onclick event to open the large infowindow at each marker.
-      marker.addListener('click', function() {
-        //create content
-        const contentString =
-          `<div class='info-window'>
-            <h2>${this.title}</h2>
-            <img src='${this.img}' alt='cafe: ${this.title}'/>
-            <p>${this.address}</p>
-            <span class='phone'>${this.phone}</span>
-          </div>`
-        const infoWindow = new google.maps.InfoWindow({
-          content: contentString
+    for (const i in locations) {
+      if (locations[i].show) {
+        // Get the position of current marker
+        const position = locations[i].location
+        const title = locations[i].title
+        const address = locations[i].address
+        const img_src = locations[i].img
+        const phone = locations[i].phone
+        //customize icon
+        var customIcon = {
+          url: markerIcon, // url
+          scaledSize: new google.maps.Size(60, 60), // scaled size
+          origin: new google.maps.Point(0,0), // origin
+          anchor: new google.maps.Point(30, 60) // anchor
+        }
+        // Create a marker per location, and put into markers array.
+        const marker = new google.maps.Marker({
+          position: position,
+          title: title,
+          address: address,
+          phone: phone,
+          img: img_src,
+          animation: google.maps.Animation.DROP,
+          map: map,
+          icon: customIcon,
+          id: i
         })
-        infoWindow.open(map, this)
-      });
+
+        // Create an onclick event to open the large infowindow at each marker.
+        marker.addListener('click', function() {
+          //create content
+          const contentString =
+            `<div class='info-window'>
+              <h2>${this.title}</h2>
+              <img src='${this.img}' alt='cafe: ${this.title}'/>
+              <p>${this.address}</p>
+              <span class='phone'>${this.phone}</span>
+            </div>`
+          const infoWindow = new google.maps.InfoWindow({
+            content: contentString
+          })
+          infoWindow.open(map, this)
+        });
+      }
+    }
   }
-}
 
   render () {
     const {map} = this.props

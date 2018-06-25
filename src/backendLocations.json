@@ -3,29 +3,34 @@
       "location": {
         "lat" : 53.3199513,
         "lng" : -6.2790107
-      }
+      },
+      "show": true
     },{
       "title": "Two Fifty Square",
       "location": {
         "lat" : 53.325263,
         "lng" : -6.266136
-      }
+      },
+      "show": true
     },{
       "title": "Nick's coffee",
       "location": {
         "lat" : 53.3260303,
         "lng" : -6.255507499999999
-      }
+      },
+      "show": true
     }, {
       "title": "Hey Donna",
       "location": {
         "lat" : 53.3255071,
         "lng" : -6.2658818
-      }
+      },
+      "show": true
     }, {
       "title": "Grove Road",
       "location": {
         "lat" : 53.329884,
         "lng" : -6.264442
-      }
+      },
+      "show": true
     }]
