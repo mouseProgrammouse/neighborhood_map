@@ -11,7 +11,8 @@ class App extends Component {
     zoom: 14,
     map: null,
     locations: [],
-    markerIcon: require('./icons/coffee-icon.svg')
+    defaultImg: require('./static/coffee.png'), //default img for info window
+    markerIcon: require('./static/coffee-icon.svg')
   }
 
   componentWillMount = () => {
@@ -24,35 +25,77 @@ class App extends Component {
     }).then((data)=>{
       this.setLocations(data)
       //get more information about places from YELP
-      let places = []
+      let businessesInfo = []
       for (const place of this.state.locations) {
-        places.push(this.getInformationAboutPlace(place))
+        businessesInfo.push(this.getInformationAboutPlace(place, this.state.defaultImg))
       }
-      Promise.all(places).then((data)=>{
-        console.log(data)
+      Promise.all(businessesInfo).then((data)=>{
         this.setLocations(data)
+        //get working info and rating
+        let workingInfo = []
+        for (const place of this.state.locations) {
+          workingInfo.push(this.getWorkingHoursAndRating(place))
+        }
+        Promise.all(workingInfo).then((data)=>{
+          this.setLocations(data)
+        })
       })
       //this.setLocations(places)
     }).catch((err)=>{console.error(' Can\'t get location\'s info from YELP: '+err)})
   }
 
-  getInformationAboutPlace = (place) =>{
+  /* for searching uses locations and cafe's name
+  * search ONLY at Dublin, Ireland
+  */
+  getInformationAboutPlace = (place, defaultImg) => {
     //get info from YELP
-    const newPlace = place
-    return new Promise(function(resolve, reject) {
+    let newPlace = place
+    //default information about place (If we didn't find inforamtion about it on YELP)
+    newPlace.address = `You can use locations: lat ${place.location.lat}
+    , lng ${place.location.lng}`
+    newPlace.img = defaultImg
+    return new Promise((resolve, reject) => {
       Fetchers.getPlacesInfo(place).then((response)=>{
         if(response.status === 200){
           response.json().then((data)=>{
-            newPlace.address = data.businesses[0].location.display_address[0]+' '+data.businesses[0].location.display_address[1]
-            newPlace.phone = data.businesses[0].display_phone
-            newPlace.img = data.businesses[0].image_url
-            newPlace.yelpID = data.businesses[0].id
-            resolve(place)
+            if (data.businesses[0]) {
+              const businessInfo = data.businesses[0]
+              newPlace.address = `${businessInfo.location.display_address[0]} ${businessInfo.location.display_address[1]}`
+              newPlace.img = (businessInfo.image_url)?(businessInfo.image_url):(defaultImg)
+              newPlace.phone = businessInfo.phone
+              newPlace.yelpID = businessInfo.id
+            }
+            resolve(newPlace)
           })
         }
-        else reject('Error: Can\'t get location\'s info from YELP. ' + response.status)
+        else reject('Error: Can\'t get places\'s info from YELP. ' + response.status)
       })
     })
+  }
+
+  //we can get that info only by yelpID
+  getWorkingHoursAndRating = (place) => {
+    let newPlace = place
+    //default information
+    newPlace.is_closed = 'false'
+    newPlace.rating = 0
+    newPlace.hours = []
+    return new Promise((resolve, reject) => {
+      if (place.yelpID) {
+        Fetchers.getWorkingInfoByYelpID(place.yelpID).then((response) => {
+          if (response.status === 200) {
+            response.json().then((data) => {
+              newPlace.is_closed = data.is_closed
+              newPlace.rating = data.rating
+              newPlace.hours = data.hours
+              resolve(newPlace)
+            })
+          }
+          else reject('Error: Can\'t get places\'s working info from YELP. ' + response.status)
+        })
+      } else resolve(newPlace)
+    }
+    )
   }
 
   setMap = (newMap) => {

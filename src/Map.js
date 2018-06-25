@@ -46,6 +46,8 @@ class Map extends Component {
       const position = locations[i].location
       const title = locations[i].title
       const address = locations[i].address
+      const img_src = locations[i].img
+      const phone = locations[i].phone
       //customize icon
       var customIcon = {
         url: markerIcon, // url
@@ -58,6 +60,8 @@ class Map extends Component {
         position: position,
         title: title,
         address: address,
+        phone: phone,
+        img: img_src,
         animation: google.maps.Animation.DROP,
         map: map,
         icon: customIcon,
@@ -67,7 +71,13 @@ class Map extends Component {
       // Create an onclick event to open the large infowindow at each marker.
       marker.addListener('click', function() {
         //create content
-        const contentString = '<div class="info-window"><h2>'+this.title+'</h2><p>'+this.address+'</p></div>'
+        const contentString =
+          `<div class='info-window'>
+            <h2>${this.title}</h2>
+            <img src='${this.img}' alt='cafe: ${this.title}'/>
+            <p>${this.address}</p>
+            <span class='phone'>${this.phone}</span>
+          </div>`
         const infoWindow = new google.maps.InfoWindow({
           content: contentString
         })
