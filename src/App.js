@@ -11,7 +11,6 @@ class App extends Component {
     zoom: 14,
     map: null,
     locations: [],
-    markers: [],
     ratings: [1,2,3,4,5],
     currentFilterRaiting: 'all',
     defaultImg: require('./static/coffee.png'), //default img for info window
@@ -159,8 +158,8 @@ class App extends Component {
           setMap={this.setMap}
           initialLocation={this.state.initialLocation}
           markerIcon={this.state.markerIcon}
-          markers={this.state.markers}
           locations={this.state.locations}
+          setLocations={this.setLocations}
           zoom={this.state.zoom}
           map={this.state.map}
           />

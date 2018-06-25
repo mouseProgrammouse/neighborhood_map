@@ -1,13 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 const Locations = (props) => {
     const {
       locations,
       ratings,
-      showAll,
-      showOpenNow,
       currentFilterRaiting,
-      currentFilterWorking,
       filterLocationsByRating
     } = props
 
@@ -26,6 +23,7 @@ const Locations = (props) => {
           { locations.filter((location)=>(location.show)).map((location) => (<li key={location.title}>
             <h2>{location.title}</h2>
             <p className="location-address">{location.address}</p>
+            <span className="rating">Rating: {location.rating}</span>
             </li>))}
         </ul>
       </div>
