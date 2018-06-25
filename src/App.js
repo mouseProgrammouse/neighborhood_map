@@ -52,8 +52,8 @@ class App extends Component {
     //get info from YELP
     let newPlace = place
     //default information about place (If we didn't find inforamtion about it on YELP)
-    newPlace.address = `You can use locations: lat ${place.location.lat}
-    , lng ${place.location.lng}`
+    newPlace.address = `coordinates: ${place.location.lat}
+    , ${place.location.lng}`
     newPlace.img = defaultImg
     return new Promise((resolve, reject) => {
       Fetchers.getPlacesInfo(place).then((response)=>{
@@ -146,14 +146,6 @@ class App extends Component {
         <div className="header">
           <h1>The Best Coffee at Dublin</h1>
         </div>
-        <Locations
-          locations={this.state.locations}
-          showAll={this.showAll}
-          showOpenNow={this.showOpenNow}
-          currentFilterRaiting={this.state.currentFilterRaiting}
-          filterLocationsByRating={this.filterLocationsByRating}
-          ratings = {this.state.ratings}
-        />
         <Map
           setMap={this.setMap}
           initialLocation={this.state.initialLocation}
@@ -163,6 +155,14 @@ class App extends Component {
           zoom={this.state.zoom}
           map={this.state.map}
           />
+        <Locations
+          locations={this.state.locations}
+          showAll={this.showAll}
+          showOpenNow={this.showOpenNow}
+          currentFilterRaiting={this.state.currentFilterRaiting}
+          filterLocationsByRating={this.filterLocationsByRating}
+          ratings = {this.state.ratings}
+        />
       </div>
     );
   }

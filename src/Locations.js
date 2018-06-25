@@ -8,9 +8,18 @@ const Locations = (props) => {
       filterLocationsByRating
     } = props
 
+    const ratingIcons = [
+      'mood_bad',
+      'sentiment_very_dissatisfied',
+      'sentiment_dissatisfied',
+      'sentiment_neutral',
+      'sentiment_satisfied',
+      'sentiment_very_satisfied'
+    ]
+
     return (
       <div className="location-container">
-        <div className="raiting-filter">
+        <div className="rating-filter">
           <select value={currentFilterRaiting} onChange={(e) => filterLocationsByRating(e, locations)}>
             <option disabled>choose rating</option>
             {ratings.map((value)=>(
@@ -23,7 +32,10 @@ const Locations = (props) => {
           { locations.filter((location)=>(location.show)).map((location) => (<li key={location.title}>
             <h2>{location.title}</h2>
             <p className="location-address">{location.address}</p>
-            <span className="rating">Rating: {location.rating}</span>
+            <div className="rating">
+              <i className="material-icons md-18">{ratingIcons[Math.floor(location.rating)]}</i>
+              <span>{location.rating}</span>
+            </div>
             </li>))}
         </ul>
       </div>

@@ -4,6 +4,7 @@
 .App {
   display: flex;
   flex-flow: wrap;
+  justify-content: space-between;
 }
 
 .header {
@@ -27,7 +28,8 @@
 }
 
 .location-container {
-  width: 29%;
+  width: 28%;
+  padding: 0 1%;
 }
 
 .info-window {
@@ -39,9 +41,42 @@
   width: 100%;
 }
 
+.material-icons {
+  font-size: 22px;
+}
+
+.rating-filter {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.rating-filter,
+.rating-filter select {
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+select:focus {
+  outline: none;
+}
+
+.rating-filter select {
+  height: 34px;
+  padding: 5px 0 5px 5px;
+  background: transparent;
+  border: none;
+  /*hide default down arrow in webkit */
+  -webkit-appearance: none;
+}
+
 .location-list {
   list-style-type: none;
-  padding: 0 10px 0 15px;
+  padding: 0 5px 0 0;
+  height: 550px;
+  overflow-y: auto;
 }
 
 .location-list li:hover {
