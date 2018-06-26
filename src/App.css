@@ -5,6 +5,7 @@
   display: flex;
   flex-flow: wrap;
   justify-content: space-between;
+  position: relative;
 }
 
 .header {
@@ -107,6 +108,54 @@ select:focus {
   display: none;
 }
 
+.place-info-container {
+  background: #fff;
+  border: #ccc 1px solid;
+  border-radius: 5px;
+  padding: 5px 15px;
+  position: absolute;
+  left: 30%;
+  top: 15%;
+  width: 40%;
+}
+
+.place-info-container .close {
+  text-align: end;
+  width: 100%;
+}
+
+.place-info-container .working-hours {
+  margin: 10px 0;
+}
+
+.place-info-container h2 {
+  text-align: center;
+  width: 100%;
+}
+
+.place-info-container .yelp {
+  color: #cccccceb;
+  font-size: 12px;
+  font-weight: 300;
+  text-align: center;
+  width: 100%;
+}
+
+.working {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.working .time {
+  width: 70%;
+}
+
+.working .day {
+  font-weight: 600;
+  width: 30%;
+}
+
 /* Always set the map height explicitly to define the size of the div
   * element that contains the map. */
 
@@ -151,7 +200,9 @@ body {
   .location-list {
     display: flex;
     flex-wrap: wrap;
+    height: auto;
     justify-content: space-around;
+    overflow-y: hidden;
   }
 
   .location-list li {
@@ -167,6 +218,13 @@ body {
     height: 170px;
     width: 100%;
   }
+
+  .place-info-container {
+    position: fixed;
+    left: 15%;
+    top: 10%;
+    width: 70%;
+  }
 }
 
 /*------------------STYLE FOR MOBILE------------------------------------*/
@@ -174,6 +232,11 @@ body {
 @media screen and (max-width:430px) {
   body {
     min-width: 350px;
+  }
+
+  .location-list {
+    height: auto;
+    overflow-y: hidden;
   }
 
   .location-list li {
@@ -199,5 +262,12 @@ body {
     position: absolute;
     top: 10px;
     width: 120px;
+  }
+
+  .place-info-container {
+    position: fixed;
+    left: 2%;
+    top: 5%;
+    width: 90%;
   }
 }
