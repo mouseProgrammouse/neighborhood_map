@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Locations = (props) => {
     const {
@@ -33,5 +34,12 @@ const Locations = (props) => {
       </div>
     )
 }
+
+Locations.propTypes = {
+    locations: PropTypes.array.isRequired,
+    ratings: PropTypes.array.isRequired,
+    currentFilterRaiting: PropTypes.string.isRequired,
+    filterLocationsByRating: PropTypes.func.isRequired
+  }
 
 export default Locations

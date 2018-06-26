@@ -1,6 +1,7 @@
 /*global google*/
 //for disable ESLint
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 //for gogle map API loading
 import scriptLoader from 'react-async-script-loader'
 
@@ -122,6 +123,16 @@ class Map extends Component {
     )
   }
 }
+
+Map.propTypes = {
+  setMap: PropTypes.func.isRequired,
+  initialLocation: PropTypes.object.isRequired,
+  locations: PropTypes.array.isRequired,
+  setLocations: PropTypes.func.isRequired,
+  zoom: PropTypes.number.isRequired,
+  map: PropTypes.object,
+  markerIcon: PropTypes.string.isRequired
+  }
 
 export default scriptLoader(
   [
