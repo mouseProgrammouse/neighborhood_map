@@ -8,15 +8,6 @@ const Locations = (props) => {
       filterLocationsByRating
     } = props
 
-    const ratingIcons = [
-      'mood_bad',
-      'sentiment_very_dissatisfied',
-      'sentiment_dissatisfied',
-      'sentiment_neutral',
-      'sentiment_satisfied',
-      'sentiment_very_satisfied'
-    ]
-
     return (
       <div className="location-container">
         <div className="rating-filter">
@@ -34,8 +25,8 @@ const Locations = (props) => {
             <img src={location.img} alt={location.title}/>
             <p className="location-address">{location.address}</p>
             <div className="rating">
-              <i className="material-icons">{ratingIcons[Math.floor(location.rating)]}</i>
-              <span>{location.rating}</span>
+              <i className="fa fa-yelp"></i>
+              <span> {location.rating}</span>
             </div>
             </li>))}
         </ul>
