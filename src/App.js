@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Map from './Map'
 import Locations from './Locations'
+import PlaceInfo from './PlaceInfo'
 import * as Fetchers from './Fetchers'
 import './App.css'
 
@@ -14,7 +15,8 @@ class App extends Component {
     ratings: [1,2,3,4,5],
     currentFilterRaiting: 'all',
     defaultImg: require('./static/coffee.png'), //default img for info window
-    markerIcon: require('./static/coffee-icon.svg')
+    markerIcon: require('./static/coffee-icon.svg'),
+    selectedPlace: null//place selected for more information
   }
 
   componentWillMount = () => {
@@ -128,6 +130,20 @@ class App extends Component {
     this.setLocations(newLocations)
   }
 
+  showPlaceInfo = (value) => {
+    if (value) {
+      //show place in locations
+      //set selected place
+      this.setSelectedPlace(value)
+      //console.log(this.state.)
+    }
+    else console.error('Something wrong with location\'s info.')
+  }
+
+  resetSelectedPlace = () => {
+    this.setSelectedPlace(null)
+  }
+
   setMap = (newMap) => {
     this.setState  ({ map: newMap })
   }
@@ -138,6 +154,10 @@ class App extends Component {
 
   setFilterRaiting = (newValue) => {
     this.setState({currentFilterRaiting: newValue})
+  }
+
+  setSelectedPlace = (newPlace) => {
+    this.setState({selectedPlace: newPlace})
   }
 
   render() {
@@ -162,6 +182,11 @@ class App extends Component {
           currentFilterRaiting={this.state.currentFilterRaiting}
           filterLocationsByRating={this.filterLocationsByRating}
           ratings = {this.state.ratings}
+          showPlaceInfo = {this.showPlaceInfo}
+        />
+        <PlaceInfo
+          place={this.state.selectedPlace}
+          resetSelectedPlace={this.resetSelectedPlace}
         />
       </div>
     );

@@ -6,7 +6,8 @@ const Locations = (props) => {
       locations,
       ratings,
       currentFilterRaiting,
-      filterLocationsByRating
+      filterLocationsByRating,
+      showPlaceInfo
     } = props
 
     return (
@@ -21,7 +22,7 @@ const Locations = (props) => {
           </select>
         </div>
         <ul className="location-list">
-          { locations.filter((location)=>(location.show)).map((location) => (<li key={location.title}>
+          { locations.filter((location)=>(location.show)).map((location) => (<li key={location.title} onClick={() => showPlaceInfo(location)}>
             <h2>{location.title}</h2>
             <img src={location.img} alt={location.title}/>
             <p className="location-address">{location.address}</p>
@@ -39,7 +40,8 @@ Locations.propTypes = {
     locations: PropTypes.array.isRequired,
     ratings: PropTypes.array.isRequired,
     currentFilterRaiting: PropTypes.string.isRequired,
-    filterLocationsByRating: PropTypes.func.isRequired
+    filterLocationsByRating: PropTypes.func.isRequired,
+    showPlaceInfo: PropTypes.func.isRequired
   }
 
 export default Locations

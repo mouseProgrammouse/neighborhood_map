@@ -6,7 +6,7 @@ This project is a part of the [Front-End Web Developer Nanodegree Program](https
 
 * [Description](#description)
 * [Screenshots](#screenshots)
-* [installation](#installation)
+* [Installation](#installation)
 
 ## Description
    It's a single-page application uses React, [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/tutorial). It provides information about my favorite cafe with the Best Coffee in Dublin. For more information about place uses [Yelp.API](https://www.yelp.com/developers/documentation/v3) (ex: address, phone, rating and opening hours).

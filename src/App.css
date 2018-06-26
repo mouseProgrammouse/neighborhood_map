@@ -20,6 +20,10 @@
   width: 70%;
 }
 
+.hide {
+  display: none;
+}
+
 .map-loader {
   position: absolute;
   right: 50%;
@@ -42,6 +46,10 @@
 
 .fa {
   font-size: 18px;
+}
+
+.close:hover {
+  color: #ccc;
 }
 
 .rating-filter {
@@ -81,6 +89,10 @@ select:focus {
 .location-list li {
   border-bottom: 1px solid #676767a6;
   padding: 15px 0;
+}
+
+.location-list li:hover {
+  background-color: #eee;
 }
 
 .location-list p {
