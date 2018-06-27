@@ -16,7 +16,9 @@ class App extends Component {
     currentFilterRaiting: 'all',
     defaultImg: require('./static/coffee.png'), //default img for info window
     markerIcon: require('./static/coffee-icon.svg'),
-    selectedPlace: null//place selected for more information
+    selectedPlace: null,//place selected for more information
+    previousFocus: null, //for ARIA
+    modalOn: false//uses for navigate througth modal window
   }
 
   componentWillMount = () => {
@@ -44,7 +46,7 @@ class App extends Component {
           this.setLocations(data)
         })
       })
-    }).catch((err)=>{console.error(' Can\'t get location\'s info from YELP: '+err)})
+    }).catch((err)=>{window.alert(' Can\'t get location\'s info from YELP: '+err)})
   }
 
   /* for searching uses locations and cafe's name
@@ -106,6 +108,8 @@ class App extends Component {
   filterLocationsByRating = (e, locations) => {
     const value = e.target.value
     let newLocations = locations
+    //hide info window
+    this.setSelectedPlace(null)
     //hide/show locations from map and list
     if (value === 'all') {
       this.showAll(locations)
@@ -130,18 +134,42 @@ class App extends Component {
     this.setLocations(newLocations)
   }
 
-  showPlaceInfo = (value) => {
-    if (value) {
-      //show place in locations
-      //set selected place
-      this.setSelectedPlace(value)
-      //console.log(this.state.)
+  showPlaceInfo = (event, value, tabIndex) => {
+    if (event.key === 'Enter' || event.type === 'click') {
+      if (value) {
+        //set selected place
+        this.setSelectedPlace(value)
+        if (event.key === 'Enter') {
+          //set target (ARIA: for return focus on place)
+          this.saveFocus(event.target)
+          //activate navigate througth modal window
+          this.setModalOn()
+        }
+      }
+      else window.alert('Something wrong with location\'s info.')
     }
-    else console.error('Something wrong with location\'s info.')
   }
 
-  resetSelectedPlace = () => {
-    this.setSelectedPlace(null)
+  resetSelectedPlace = (event) => {
+    if (event.key === 'Enter' || event.type === 'click') {
+      //return focus
+      if (this.state.previousFocus) {
+        this.state.previousFocus.focus()
+        this.setModalOff()
+      }
+      this.setSelectedPlace(null)
+    }
+  }
+
+  exitModal = (event) => {
+    if (event.keyCode === 27) {
+      //return focus
+      if (this.state.previousFocus) {
+        this.state.previousFocus.focus()
+        this.setModalOff()
+      }
+      this.setSelectedPlace(null)
+    }
   }
 
   setMap = (newMap) => {
@@ -152,6 +180,10 @@ class App extends Component {
     this.setState({locations: newLocations})
   }
 
+  saveFocus = (target) => {
+    this.setState({previousFocus: target})
+  }
+
   setFilterRaiting = (newValue) => {
     this.setState({currentFilterRaiting: newValue})
   }
@@ -160,11 +192,21 @@ class App extends Component {
     this.setState({selectedPlace: newPlace})
   }
 
+  //those method uses for ARIA
+  //if modalOn:true -> navigate throught modal window is on
+  setModalOn = () => {
+    this.setState({modalOn: true})
+  }
+
+  setModalOff = () => {
+    this.setState({modalOn: false})
+  }
+
   render() {
     return (
       <div className="App">
         <div className="header">
-          <h1>The Best Coffee at Dublin</h1>
+          <h1 tabIndex={1}>The Best Coffee at Dublin</h1>
         </div>
         <Map
           setMap={this.setMap}
@@ -174,7 +216,7 @@ class App extends Component {
           setLocations={this.setLocations}
           zoom={this.state.zoom}
           map={this.state.map}
-          />
+        />
         <Locations
           locations={this.state.locations}
           showAll={this.showAll}
@@ -182,11 +224,15 @@ class App extends Component {
           currentFilterRaiting={this.state.currentFilterRaiting}
           filterLocationsByRating={this.filterLocationsByRating}
           ratings = {this.state.ratings}
-          showPlaceInfo = {this.showPlaceInfo}
+          showPlaceInfo={this.showPlaceInfo}
+          tabIndexStart={2}
         />
         <PlaceInfo
           place={this.state.selectedPlace}
           resetSelectedPlace={this.resetSelectedPlace}
+          modalOn={this.state.modalOn}
+          exitModal={this.exitModal}
+          tabIndexStart={10}
         />
       </div>
     );

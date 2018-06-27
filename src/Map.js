@@ -116,8 +116,8 @@ class Map extends Component {
     const {map} = this.props
 
     return (
-      <div className="map-container">
-        <div ref="map" id="map"></div>
+      <div className="map-container" tabIndex={-1} aria-hidden="true">
+        <div ref="map" id="map" role="application" aria-label="Google maps"></div>
         { !map && <div className="map-loader">Loading...</div> }
       </div>
     )

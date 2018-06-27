@@ -67,6 +67,10 @@
   width: 100%;
 }
 
+.rating-filter select:focus {
+  border: 2px #00a1ff solid;
+}
+
 select:focus {
   outline: none;
 }
