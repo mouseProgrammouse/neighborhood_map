@@ -24,9 +24,7 @@ This project is a part of the [Front-End Web Developer Nanodegree Program](https
   The application is available even without a connection. Uses [Service Workers](https://developers.google.com/web/fundamentals/primers/service-workers/).
 
 ## Screenshots
-  <img src="" width="740"/>
-  <img src="" width="740"/>
-  <img src="" width="740"/>
+  <img src="https://raw.githubusercontent.com/mouseProgrammouse/neighborhood_map/master/src/static/screen.png" width="740"/>
 
 ## Installation
 
